@@ -1,33 +1,16 @@
-package com.example.link3.entity;
+package com.example.link3.dto;
 
-
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class AuthDto {
     private String username;
 
     private String password;
 
-    public User() {
+    public AuthDto() {
     }
 
-    public User(Long id, String username, String password) {
-        this.id = id;
+    public AuthDto(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {

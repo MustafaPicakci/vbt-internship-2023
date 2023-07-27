@@ -1,24 +1,20 @@
-package com.example.link3.entity;
+package com.example.link3.dto;
 
-import jakarta.persistence.*;
+import com.example.link3.entity.User;
 
-@Entity
-public class Link {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class LinkDto {
+
     private Long id;
     private String name;
     private String url;
     private String description;
+    private UserDto user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    public Link() {
+    public LinkDto() {
     }
 
-    public Link(Long id, String name, String url, String description, User user) {
+    public LinkDto(Long id, String name, String url, String description, UserDto user) {
         this.id = id;
         this.name = name;
         this.url = url;
@@ -58,13 +54,11 @@ public class Link {
         this.description = description;
     }
 
-    public User getUser() {
+    public UserDto getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDto user) {
         this.user = user;
     }
-
-
 }

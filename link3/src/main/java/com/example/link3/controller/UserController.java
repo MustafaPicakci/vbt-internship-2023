@@ -1,5 +1,7 @@
 package com.example.link3.controller;
 
+import com.example.link3.dto.AuthDto;
+import com.example.link3.dto.UserDto;
 import com.example.link3.entity.User;
 import com.example.link3.security.JwtUtils;
 import com.example.link3.service.UserService;
@@ -18,33 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    JwtUtils jwtUtils;
+    private final UserService userService;
 
-    @Autowired
-    AuthenticationManager authenticationManager;
-
-    @Autowired
-    UserService userService;
-
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody User user) {
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-        if (authentication.isAuthenticated()) {
-            return ResponseEntity.ok(jwtUtils.generateToken(user.getUsername()));
-        }
-        {
-            throw new UsernameNotFoundException("invalid authentication");
-        }
+    public ResponseEntity login(@RequestBody AuthDto auth) throws Exception {
+        return ResponseEntity.ok(userService.login(auth));
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody User user) throws Exception {
-        userService.register(user);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<UserDto> register(@RequestBody AuthDto auth) throws Exception {
+        return ResponseEntity.ok(userService.register(auth));
     }
-
-
 }
